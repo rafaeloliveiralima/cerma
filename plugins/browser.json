@@ -1,0 +1,49 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        },
+        "cordova-plugin-contacts": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        },
+        "cordova-plugin-device-motion": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        },
+        "cordova-plugin-device-orientation": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "br.gov.jbrj.cerma"
+        }
+    }
+}
