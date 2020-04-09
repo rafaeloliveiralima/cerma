@@ -269,7 +269,7 @@ li.lifooter a:hover:not(.active) {
 			<span class="icon-bar"></span>	
 		  </button>
 		  	
-<a class="navbar-brand" href="index2.html">CERMA 1.0</a>
+<a class="navbar-brand" href="index2.html">CERMA 1.1</a>
 		  <span id="div_dadoslogin" ></span>
 
 		</div>
@@ -689,7 +689,7 @@ li.lifooter a:hover:not(.active) {
 		var resultado = 0;
 		var xmlhttp = new XMLHttpRequest();
 			
-		xmlhttp.open("GET","https://croma.jbrj.gov.br/CERMA2.0/getpedidosparaatendimento.php?"+params,true);
+		xmlhttp.open("GET","http://cerma.jbrj.gov.br/getpedidosparaatendimento.php?"+params,true);
 		xmlhttp.onload = function ()
 		{
 			if (xmlhttp.status==200)
@@ -715,7 +715,7 @@ li.lifooter a:hover:not(.active) {
 		var resultado = 0;
 		var xmlhttp = new XMLHttpRequest();
 			
-		xmlhttp.open("GET","https://croma.jbrj.gov.br/CERMA2/getpedidosjson.php?"+params,true);
+		xmlhttp.open("GET","https://cerma.jbrj.gov.br/getpedidosjson.php?"+params,true);
 		xmlhttp.onload = function ()
 		{
 			if (xmlhttp.status==200)
@@ -1209,9 +1209,10 @@ li.lifooter a:hover:not(.active) {
 			var resultado = 0;
 			var xmlhttp = new XMLHttpRequest();
 			
-			xmlhttp.open("GET","https://croma.jbrj.gov.br/CERMA2.0/getmeuspedidos.php?"+params,true);
+			xmlhttp.open("GET","http://cerma.jbrj.gov.br/getmeuspedidos.php?"+params,true);
 			xmlhttp.onload = function ()
 			{
+				//alert(xmlhttp.status);
 				if (xmlhttp.status==200)
 				{
 					var str = xmlhttp.responseText;
