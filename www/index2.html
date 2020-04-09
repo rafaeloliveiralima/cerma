@@ -1305,12 +1305,12 @@ li.lifooter a:hover:not(.active) {
                 var resultado = 0;
                 var xmlhttp = new XMLHttpRequest();
                 //alert(latitude);
-				xmlhttp.open("GET","https://jabot.jbrj.gov.br/arboreto/testaloginapp.php?"+params,false);
+				xmlhttp.open("GET","http://jabot.jbrj.gov.br/arboreto/testaloginapp.php?"+params,false);
                 //xmlhttp.open("GET","https://projetofauna.jbrj.gov.br/testaloginapp.php?"+params,false);
 				//xmlhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*');
 
                 xmlhttp.onload = function (){
-					//alert(xmlhttp.status);
+					alert(xmlhttp.status);
                     if (xmlhttp.status==200)
                         {
 						    var str = xmlhttp.responseText;
