@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="br.gov.jbrj.cerma" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Cerma</name>
+    <description>
+        Permite que os técnicos da Cerma gerencie os pedidos além de permitir que usuários do Jardim solicite atendimento.
+    </description>
+    <author email="support@phonegap.com" href="http://phonegap.com">
+        CTIC
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+</widget>
