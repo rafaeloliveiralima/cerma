@@ -89,7 +89,7 @@ li.lifooter a:hover:not(.active) {
                 var resultado = 0;
                 var xmlhttp = new XMLHttpRequest();
 				
-                xmlhttp.open("GET","https://projetofauna.jbrj.gov.br/listafotos.php?"+params,false);
+                xmlhttp.open("GET","http://cerma.jbrj.gov.br/listafotos.php?"+params,false);
                 xmlhttp.onload = function (){
                     if (xmlhttp.status==200)
                         {
@@ -269,8 +269,8 @@ li.lifooter a:hover:not(.active) {
 			<span class="icon-bar"></span>	
 		  </button>
 		  	
-<a class="navbar-brand" href="index2.html">CERMA 1.1</a>
-		  <span id="div_dadoslogin" ></span>
+		<a class="navbar-brand" href="index2.html">CERMA 1.1</a>
+		<span id="div_dadoslogin" ></span>
 
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">	
@@ -302,8 +302,8 @@ li.lifooter a:hover:not(.active) {
 	<input type='hidden' name='idusuario' id='idusuario' value=''>
 	<input type='hidden' name='idpedidoparaatendimento' id='idpedidoparaatendimento' value=''>
 	<input type='hidden' name='nome' id='nome' value=''>
+
 	<div class="tab-content" id="mytab">
-	
 		<div id="consmeuspedidos" class="tab-pane fade">
 			<div class="container" id='chamados'>
 			</div>
@@ -314,114 +314,6 @@ li.lifooter a:hover:not(.active) {
 			</div>
 		</div>
 
-		<div id="consatendimentofiltro" class="tab-pane fade">
-			<div class="container">
-			<label class="radio-inline"><input type="radio" name="optradio" value="7"  onchange = 'carregaatendimento(0,this.value)'>Semana</label>
-			<label class="radio-inline"><input type="radio" name="optradio" value="15" onchange = 'carregaatendimento(0,this.value)'>15 Dias</label>
-			<label class="radio-inline"><input type="radio" name="optradio" value="30" onchange = 'carregaatendimento(0,this.value)' >30 Dias</label>
-			<label class="radio-inline"><input type="radio" name="optradio" value="0"  onchange = 'carregaatendimento(0,this.value)' >Todos</label>
-			</div>
-			<div class="container" id='chamadosfiltro'>
-			</div>
-		</div>
-		
-		<div id="cadprontuario" class="tab-pane fade">
-		  <form name='frmprontuario' id='frmprontuario' method='post'>
-			<div class="container">
-				<h3>Novo Prontuário</h3>
-				<div class="form-group">
-					<label for="email">Destino:</label>
-					<div id='divdestino'></div>
-				</div>
-				
-<!--				<div class="form-group">
-					<label for="cmboxdestino">Destino:</label>
-					<select name='cmboxdestino' id='cmboxdestino' class="form-control input-sm" >
-					<option value='1'>JBRJ</option>
-					<option value='2'>Clinica veterinária</option>
-					</select>
-				</div>
-				-->
-
-
-				<div class="form-group">
-					<label for="edtpeso">Peso (g):</label>
-					<input type="text" onkeypress="return onlynumber();" id="edtpeso" name="edtpeso" class="form-control input-sm" >
-				</div>
-				
-				<div class="form-group">
-					<label for="edtobservacaoprontuario">Descrição:</label>
-					<textarea class="form-control" rows="3" id="edtobservacaoprontuario" id="edtobservacaoprontuario"></textarea>
-				</div>
-				
-				<button type="button" class="btn btn-success btn-block" onclick="salvarProntuario()">Salvar</button>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				
-			</div>
-			
-			</form>
-		</div>	
-
-
-		<div id="cadanimal" class="tab-pane fade">
-		  <form name='frmcadanimal' id='frmcadanimal' method='post'>
-			<div class="container">
-				<h4>Cad. Animal</h4>
-				<div class="form-group">
-					<label for="email">Nome</label>
-					<input type="text" class="form-control input-md" id="edtnomeanimal" name="edtnomeanimal" value="">
-				</div>
-				<div class="form-group">
-					<label for="email">Tipo Morfometria:</label>
-					<div id='divtipoanimal'></div>
-				</div>
-				<div class="form-group">
-					<label for="email">Situação do Animal:</label>
-					<div id='divsituacaoanimal'></div>
-				</div>
-				<div class="form-group">
-					<label for="email">Observação:</label>
-					<textarea class="form-control" rows="3" id="edtobservacaoanimal" id="edtobservacaoanimal"></textarea>
-				</div>
-				<div class="form-group">
-					<label for="email">Microchip</label>
-					<input type="text" onkeypress="return onlynumber();" class="form-control input-sm" id="edtmicrochipanimal" name="edtmicrochipanimal" value="">
-				</div>
-				<div class="form-group">
-					<label for="email">Classe etária:</label>
-					<div id='divclasseetaria'></div>
-				</div>
-
-				<div class="form-group">
-					<label for="email">Sexo:</label>
-					<div id='divsexo'></div>
-				</div>
-
-				<div class="form-group">
-					<label for="email">Nome Científico</label>
-					<input type="text" class="form-control input-sm" id="edtnomecientificoanimal" name="edtnomecientificoanimal" value="">
-				</div>
-
-				
-				<button type="button" class="btn btn-success btn-block" onclick="salvarAnimal()">Salvar</button>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				
-			</div>
-			
-			</form>
-		</div>		
-		
-	
 		<div id="novopedido" class="tab-pane fade">
 		  <form name='frmpedido' id='frmpedido' method='post'>
 			<div class="container">
@@ -479,93 +371,21 @@ li.lifooter a:hover:not(.active) {
 			</form>
 		</div>
 	
-		<div id="conschamado" class="tab-pane fade">
-			<div class="container" id="containerconschamado">
-				<h3>Consulta Chamado</h3>
-				<div class="form-group">
-					<label for="email">ID:</label>
-					<div class="input-group">
-						<input readonly type="text" class="form-control input-md" id="edtID">
-						<input type="hidden" class="form-control input-md" id="idsituacaochamado" value=''>
-						<span class="input-group-btn">
-							<button  class="botao btn btn-default" type="button" onclick="abreCamera('CAMERA','CHAMADO','')"><span class="glyphicon glyphicon-camera"></span> </button>
-							<button  class="botao btn btn-default" type="button" onclick="abreCamera('ARQUIVO','CHAMADO','')" ><span class="glyphicon glyphicon-file"></span> </button>
-							<button  class="botao btn btn-default" type="button" onclick="mostraMapa(document.getElementById('edtID').value)" ><span class="glyphicon glyphicon-globe"></span> </button>
-						</span>
-				</div>
-				</div>
-				<div class="form-group">
-					<label for="email">Solicitante:</label>
-					<input type="text" class="form-control input-sm" id="edtsolicitante2" name="edtsolicitante2">
-				</div>
-				<div class="form-group">
-					<label for="email">Animal:</label>
-					<input type="text" class="form-control input-sm" id="edtanimal2">
-				</div>
-				<div class="form-group">
-					<label for="email">Situação do Animal:</label>
-					<select id="cmboxsituacaoanimal2" name='cmboxsituacaoanimal2'  class="form-control input-sm" >
-						<option value='3'>Não identificada</option>
-						<option value='1'>Vivo</option>
-						<option value='2'>Morto</option>
-					</select>
-				</div>
-				
-				<div class="form-group">
-					<label for="email">Local:</label>
-					<input type="text" class="form-control input-sm" id="edtlocal2">
-				</div>
-				<div class="form-group">
-					<label for="email">Descrição:</label>
-					<textarea class="form-control" rows="3" id="edtdescricao2"></textarea>
-				</div>
-				<div class="form-group">
-					<a onclick="abreAtedimento(document.getElementById('edtatendimento2').value)"><label for="email"><span class="glyphicon glyphicon-edit"></span> Atendimento</label></a>
-					<textarea readonly class="form-control" rows="3" id="edtatendimento2" id="edtatendimento2"></textarea>
-				</div>
-				<div class="form-group">
-					<label for="email">Data/hora:</label>
-					<input readonly type="text" class="form-control input-sm" id="edtdata">
-				</div>
-<!--				<div class="form-group">
-					<label for="email">Hora:</label>
-					<input type="text" class="form-control input-sm" id="edthora">
-				</div>
-				<div class="form-group">
-					<label for="email">Usuário:</label>
-					<input type="text" class="form-control input-sm" id="edtusuario">
-				</div>
-				-->
-				<button type="button" class="botao btn btn-success btn-sm btn-block" onclick="alterarChamado()">Alterar dados do chamado</button>
-				<br>
-				
-				<div class="container">
-					<h4>Imagens <a onclick="pegaImagens(document.getElementById('edtID').value)" class="btn btn-info btn-sm">
-					<span class="glyphicon glyphicon-refresh"></span>
-				</a></h4> 
-					<div id='imagem'></div>
-				</div>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-			</div>
-		</div>
-
 		<div id="login" class="tab-pane fade">
 			<div class="container">
+
+			
 				<div class="app">
-					<!--<h1>Fauna JBRJ</h1>-->
-				<div class="form-group">
-					<label for="email">Usuário:</label>
-					<input type="text" class="form-control" id="edtlogin">
-					<input type="hidden" class="form-control" id="edtuuid">
-				</div>
-				<div class="form-group">
-					<label for="pwd">Senha:</label>
-					<input type="password" class="form-control" id="edtsenha">
-				</div>
+<div class="input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    <input id="edtlogin" type="text" class="form-control" name="edtlogin" placeholder="Usuário">
+  </div>
+  <div class="input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+    <input id="edtsenha" type="password" class="form-control" name="edtsenha" placeholder="Senha">
+  </div>	
+<input type="hidden" class="form-control" id="edtuuid">  
+<br>
 				<button  type="button" onclick='login()' class="btn btn-success btn-block">Enviar</button>
 				
 				</div>
@@ -595,6 +415,68 @@ li.lifooter a:hover:not(.active) {
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
+	function login()
+	{
+		var login = document.getElementById('edtlogin').value;
+		var senha = document.getElementById('edtsenha').value;
+		var uuid = document.getElementById('edtuuid').value;
+		var params = "edtlogin="+login+"&edtsenha="+senha+"&edtuuid="+uuid;
+		var resultado = 0;
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET","http://cerma.jbrj.gov.br/testaloginapp.php?"+params,false);
+		xmlhttp.onload = function ()
+		{
+			if (xmlhttp.status==200)
+			{
+				var str = xmlhttp.responseText;
+				//alert(str);
+				if (str.substring(0, 4)=='ERRO')
+				{
+					document.getElementById('div_dadoslogin').innerHTML='<p class="navbar-text">LOGIN INVÁLIDO</p>';
+					navigator.notification.alert(
+						'Não foi possível efetuar o login.',  // message
+						alertDismissed,         // callback
+						'Atenção',            // title
+						'OK'                  // buttonName
+					);
+				}
+				else
+				{
+					var res = str.split("|");
+					codusuario = res[0];
+					ggcodusuario = res[0];
+					username = res[1];
+					idtiposuaurio = 1;
+
+					window.localStorage.setItem("uname", username);
+					window.localStorage.setItem("codusuario",codusuario);
+					window.localStorage.setItem("idtiposuaurio",idtiposuaurio);
+
+					document.getElementById('div_dadoslogin').innerHTML='<p class="navbar-text">'+username+'</p>';
+
+					document.getElementById('idusuario').value=window.localStorage.getItem("codusuario");
+					document.getElementById('nome').value=window.localStorage.getItem("uname");
+					$('#myNavbar a[href="#home"]').tab('show');								
+					
+				}
+				if (idtiposuaurio<3)
+				{
+					//mostraChamadosParaAtender();
+				}
+			}
+			else if (xmlhttp.status == 404) 
+			{
+				alert("Web Service doesn't work");
+			}
+			else
+			{
+				alert("Unknown erro occurred while trying insert data");
+			}
+		};
+		xmlhttp.send();
+		return resultado;
+    }
+	 
 	
 	function confirmarAtendimento(idatendimento)
 	{
@@ -707,6 +589,71 @@ li.lifooter a:hover:not(.active) {
 		};
 		xmlhttp.send();
 		return resultado; 
+	}
+	
+	function abreCamera(tipo,funcao,id)
+	{
+    	getImage(tipo,funcao,id);
+		//pegaImagens(id);
+	}
+
+	function getImage(tipo,funcao,id)
+	{
+		document.getElementById('idpedidoparaatendimento').value=id;
+		if (tipo=='CAMERA')
+		{
+			if (funcao=='PEDIDO')
+			{
+				navigator.camera.getPicture(uploadPhoto, function(message) {
+					alert('get picture failed');
+				}, {
+				quality: 25,
+				destinationType: navigator.camera.DestinationType.FILE_URI,
+			sourceType: navigator.camera.PictureSourceType.CAMERA
+			 });
+			}
+			else
+			{
+				navigator.camera.getPicture(uploadPhoto, function(message) {
+					alert('get picture failed');
+				}, {
+				quality: 25,
+				destinationType: navigator.camera.DestinationType.FILE_URI,
+				sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+				});
+			
+			}
+		}
+		else
+		{
+			navigator.camera.getPicture(uploadPhoto, function(message) {
+				alert('get picture failed');
+			}, {
+			quality: gqualidade,
+			destinationType: navigator.camera.DestinationType.FILE_URI,
+			sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+			});
+		}
+		
+	}
+	function uploadPhoto(imageURI) {
+		var options = new FileUploadOptions();
+		options.fileKey = "file";
+		options.fileName = leftPad(document.getElementById('idpedidoparaatendimento').value,4)+'_'+imageURI.substr(imageURI.lastIndexOf('/') + 1);
+		options.mimeType = "image/jpeg";
+		console.log(options.fileName);
+		var params = new Object();
+		params.value1 = "test";
+		params.value2 = "param";
+		options.params = params;
+		options.chunkedMode = false;
+
+		var ft = new FileTransfer();
+		ft.upload(imageURI, "http://cerma.jbrj.gov.br/upload.php", function(result){
+			console.log(JSON.stringify(result));
+		}, function(error){
+			console.log(JSON.stringify(error));
+		}, options);
 	}
 	
 	function preencheDadosPedido(id)
@@ -897,7 +844,7 @@ li.lifooter a:hover:not(.active) {
 				 $('#myNavbar a[href="#conschamado"]').tab('show');
 				 document.getElementById('edtID').value=id;  
 				 preencheDadosChamado(id);
-				 pegaImagens(id);
+				 //pegaImagens(id);
 			   }
 		   }
 		  }
@@ -913,66 +860,16 @@ li.lifooter a:hover:not(.active) {
 		   navigator.app.exitApp();
 		}
 		
-		function abreCamera(tipo,funcao,id)
-		{
-     		getImage(tipo,funcao,id);
-		   	pegaImagens(id);
-		}
+
 		
-		function getImage(tipo,funcao,id)
-		{
-			if (tipo=='CAMERA')
-			{
-				if (funcao=='CHAMADO')
-				{
-					navigator.camera.getPicture(uploadPhoto, function(message) {
-						alert('get picture failed');
-					}, {
-					quality: 25,
-					destinationType: navigator.camera.DestinationType.FILE_URI,
-				sourceType: navigator.camera.PictureSourceType.CAMERA
-				 });
-				}
-				else
-				{
-					navigator.camera.getPicture(uploadPhoto, function(message) {
-						alert('get picture failed');
-					}, {
-					quality: 25,
-					destinationType: navigator.camera.DestinationType.FILE_URI,
-					sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
-					});
-				
-				}
-			}
-			
-		}
+
 
 		function leftPad(value, totalWidth, paddingChar) {
 			var length = totalWidth - value.toString().length + 1;
 			return Array(length).join(paddingChar || '0') + value;
 		};
 		
-		function uploadPhoto(imageURI) {
-		 var options = new FileUploadOptions();
-		 options.fileKey = "file";
-		 //options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
-		 options.fileName = leftPad(document.getElementById('edtID').value,4)+'_'+imageURI.substr(imageURI.lastIndexOf('/') + 1);
-		 options.mimeType = "image/jpeg";
-		 console.log(options.fileName);
-		 var params = new Object();
-		 params.value1 = "test";
-		 params.value2 = "param";
-		 options.params = params;
-		 options.chunkedMode = false;
 
-		var ft = new FileTransfer();
-		 ft.upload(imageURI, "https://projetofauna.jbrj.gov.br/upload.php", function(result){
-		 console.log(JSON.stringify(result));
-		 }, function(error){
-		 console.log(JSON.stringify(error));
-		 }, options);
-		 }
 		 
 		function alterarChamado()
 		{
@@ -1293,83 +1190,7 @@ li.lifooter a:hover:not(.active) {
 		}
 
 		
-		function login()
-		{
-		
-		var login = document.getElementById('edtlogin').value;
-		var senha = document.getElementById('edtsenha').value;
-		var uuid = document.getElementById('edtuuid').value;
-		//alert(ime);
-	     //document.getElementById('edtlabel').innerHTML="Usuario: "+usuario+" Lat/Long: "+latitude + ','+ longitude + ' Equipe: '+equipe;
-         var params = "edtlogin="+login+"&edtsenha="+senha+"&edtuuid="+uuid;
-                var resultado = 0;
-                var xmlhttp = new XMLHttpRequest();
-                //alert(latitude);
-				xmlhttp.open("GET","http://cerma.jbrj.gov.br/testaloginapp.php?"+params,false);
-                //xmlhttp.open("GET","https://projetofauna.jbrj.gov.br/testaloginapp.php?"+params,false);
-				//xmlhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*');
 
-                xmlhttp.onload = function (){
-					alert(xmlhttp.status);
-                    if (xmlhttp.status==200)
-                        {
-						    var str = xmlhttp.responseText;
-							//alert(str);
-							if (str.substring(0, 4)=='ERRO')
-							{
-								document.getElementById('div_dadoslogin').innerHTML='<p class="navbar-text">LOGIN INVÁLIDO</p>';
-
-								navigator.notification.alert(
-									'Não foi possível efetuar o login.',  // message
-									alertDismissed,         // callback
-									'Atenção',            // title
-									'OK'                  // buttonName
-								);
-								
-								//alert('Não foi possível efetuar o login.');
-							}
-							else
-							{
-								
-								var res = str.split("|");
-								codusuario = res[0];
-								ggcodusuario = res[0];
-								username = res[1];
-								idtiposuaurio = 1;
-
-								window.localStorage.setItem("uname", username);
-								window.localStorage.setItem("codusuario",codusuario);
-								window.localStorage.setItem("idtiposuaurio",idtiposuaurio);
-
-								document.getElementById('div_dadoslogin').innerHTML='<p class="navbar-text">'+username+'</p>';
-
-								document.getElementById('idusuario').value=window.localStorage.getItem("codusuario");
-								document.getElementById('nome').value=window.localStorage.getItem("uname");
-								$('#myNavbar a[href="#home"]').tab('show');								
-								
-                            }
-							
-							if (idtiposuaurio<3)
-							{
-							    //mostraChamadosParaAtender();
-							}
-
-                        }
-                    else if (xmlhttp.status == 404) {
-                        alert("Web Service doesn't work");
-                        
-                    }
-                    else
-                        {
-                            alert("Unknown erro occurred while trying insert data");
-                        }
-                };
-                xmlhttp.send();
-                return resultado;
-				
-         
-     }
-	 
 
 
 		
