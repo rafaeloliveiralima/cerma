@@ -128,14 +128,14 @@ li.lifooter a:hover:not(.active) {
 			<label for="email">Observação:</label>
 			<textarea class="form-control" rows="3" id="edtconfirmacaoatendimento_observacao"></textarea>
 		  </div>
-          <div class="form-group">
-			<label for="email">Usuário:</label>
-			<input type="text" id="edtedtconfirmacaoatendimento_usuario" name="edtedtconfirmacaoatendimento_usuario" class="form-control input-sm" >
-		  </div>
-          <div class="form-group">
-			<label for="email">Senha:</label>
-			<input type="password" id="edtedtconfirmacaoatendimento_senha" name="edtedtconfirmacaoatendimento_senha" class="form-control input-sm" >
-		  </div>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input id="edtconfirmacaoatendimento_login" type="text" class="form-control" name="edtconfirmacaoatendimento_login" placeholder="Usuário">
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+				<input id="edtconfirmacaoatendimento_senha" type="password" class="form-control" name="edtconfirmacaoatendimento_senha" placeholder="Senha">
+			</div>	
         </div>
 
         <div class="modal-footer">
@@ -177,26 +177,27 @@ li.lifooter a:hover:not(.active) {
         <div class="modal-body">
           <div class="form-group">
 			<label for="email">Descrição material:</label>
-			<textarea class="form-control" rows="3" id="edtatendimento"></textarea>
+			<textarea class="form-control" rows="3" id="edtatendimento_descricaomaterial" name="edtatendimento_descricaomaterial"></textarea>
 		  </div>
           <div class="form-group">
 			<label for="email">Descrição Atendimento:</label>
-			<textarea class="form-control" rows="3" id="edtatendimento"></textarea>
+			<textarea class="form-control" rows="3" id="edtatendimento_descricaoatendimento"  name="edtatendimento_descricaoatendimento"></textarea>
 		  </div>
           <div class="form-group">
 			<label for="email">Situação:</label>
-			  <select name='cmboxsituacao' id='cmboxsituacao' class="form-control">
+			  <select id='cmboxatendimento_situacao' name='cmboxatendimento_situacao' class="form-control">
 			  <option value=''></option>
-			  <option value='1'>Para atendimento </option>
 				<option value='2'>Em atendimento </option>
 				<option value='3'>Aguardando material </option>
-				<option value='4'>Cancelado </option>
-				<option value='5'>Finalizado </option>
+				<option value='6'>Finalizado Técnico</option>
 			  </select>
 		  </div>
         </div>
         <div class="modal-footer">
-          <button type="button" onclick="alterarAtendimento(document.getElementById('idpedidoparaatendimento').value,document.getElementById('edtatendimento').value,document.getElementById('cmboxsituacao').value)" class="btn btn-sm btn-success" data-dismiss="modal">Salvar</button>
+          <button type="button" onclick="alterarAtendimento(document.getElementById('idpedidoparaatendimento').value,
+		  document.getElementById('edtatendimento_descricaomaterial').value,
+		  document.getElementById('edtatendimento_descricaoatendimento').value,
+		  document.getElementById('cmboxatendimento_situacao').value)" class="btn btn-sm btn-success" data-dismiss="modal">Salvar</button>
           <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Fechar</button>
         </div>
       </div>
@@ -320,27 +321,33 @@ li.lifooter a:hover:not(.active) {
 				<h3>Novo Pedido</h3>
 				<div class="form-group">
 					<label for="email">Solicitante</label>
-					<input type="text" class="form-control input-sm" id="edtsolicitante" name="edtsolicitante" value="">
+					<input type="text" class="form-control" id="edtsolicitante" name="edtsolicitante" value="">
 				</div>
 				<div class="form-group">
 					<label for="email">Telefone</label>
-					<input type="text" class="form-control input-sm" id="edttelefone" name="edttelefone" value="">
+					<input type="text" class="form-control" id="edttelefone" name="edttelefone" value="">
 				</div>
 				<div class="form-group">
 					<label for="email">Email</label>
-					<input type="text" class="form-control input-sm" id="edtemail" name="edtemail" value="">
+					<input type="text" class="form-control" id="edtemail" name="edtemail" value="">
 				</div>
+				
 				<div class="form-group">
 					<label for="email">Setor</label>
-					<input type="text" class="form-control input-sm" id="edtsetor" name="edtsetor" value="">
+					<div id='cadastropedido_divsetor'></div>
+					<!--<input type="text" class="form-control" id="edtsetor" name="edtsetor" value="">-->
 				</div>
 				<div class="form-group">
 					<label for="email">Local</label>
-					<input type="text" class="form-control input-sm" id="edtlocal" name="edtlocal" value="">
+					<input type="text" class="form-control" id="edtlocal" name="edtlocal" value="">
+				</div>
+				<div class="form-group">
+					<label for="email">Sala</label>
+					<input type="text" class="form-control" id="edtsala" name="edtsala" value="">
 				</div>
 				<div class="form-group">
 					<label for="email">Tipo Serviço:</label>
-					<select name='cmboxtiposervico' id='cmboxtiposervico' class="form-control input-sm" >
+					<select name='cmboxtiposervico' id='cmboxtiposervico' class="form-control" >
 						<option value=''>Não identificada</option>
 						<option value='1'>Elétrica</option>
 						<option value='2'>Marcenaria</option>
@@ -358,7 +365,7 @@ li.lifooter a:hover:not(.active) {
 					<textarea name='edtdescricao' id='edtdescricao' class='form-control'></textarea>
 				</div>
 				
-				<button type="button" class="btn btn-success btn-block" onclick="salvarChamado()">Salvar</button>
+				<button type="button" class="btn btn-success btn-block" onclick="salvarPedido()">Salvar</button>
 				<br>
 				<br>
 				<br>
@@ -373,21 +380,18 @@ li.lifooter a:hover:not(.active) {
 	
 		<div id="login" class="tab-pane fade">
 			<div class="container">
-
-			
 				<div class="app">
-<div class="input-group">
-    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-    <input id="edtlogin" type="text" class="form-control" name="edtlogin" placeholder="Usuário">
-  </div>
-  <div class="input-group">
-    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-    <input id="edtsenha" type="password" class="form-control" name="edtsenha" placeholder="Senha">
-  </div>	
-<input type="hidden" class="form-control" id="edtuuid">  
-<br>
-				<button  type="button" onclick='login()' class="btn btn-success btn-block">Enviar</button>
-				
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+						<input id="edtlogin" type="text" class="form-control" name="edtlogin" placeholder="Usuário">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+						<input id="edtsenha" type="password" class="form-control" name="edtsenha" placeholder="Senha">
+					</div>	
+					<input type="hidden" class="form-control" id="edtuuid">  
+					<br>
+					<button  type="button" onclick='login()' class="btn btn-success btn-block">Enviar</button>
 				</div>
 			</div>
 		</div>
@@ -485,8 +489,7 @@ li.lifooter a:hover:not(.active) {
 	
 	function salvarConfirmarAtendimento()
 	{
-	
-	
+
 	}
 
 	function abreAtedimento(idatendimento)
@@ -513,6 +516,12 @@ li.lifooter a:hover:not(.active) {
 	{
 		var idusuario = window.localStorage.getItem("codusuario");
 		if (idusuario.length<1) {
+			navigator.notification.alert(
+								'Você precisa estar logado para acessar a funcionalidade.',  // message
+								alertDismissed,         // callback
+								'Atenção',            // title
+								'OK'                  // buttonName
+			);		
 			$('#myNavbar a[href="#login"]').tab('show');
 		}
 		else
@@ -534,8 +543,14 @@ li.lifooter a:hover:not(.active) {
 	// retorna uma lista de chamados que pertence ao usuário logado
 	// caso não esteja logado, redireciona para a pagina de login
 		var idusuario = window.localStorage.getItem("codusuario");
-		if (idusuario == null)
+		if (idusuario.length<1)
 		{
+			navigator.notification.alert(
+								'Você precisa estar logado para acessar a funcionalidade.',  // message
+								alertDismissed,         // callback
+								'Atenção',            // title
+								'OK'                  // buttonName
+			);
 			$('#myNavbar a[href="#login"]').tab('show');
 		}
 		else
@@ -549,6 +564,12 @@ li.lifooter a:hover:not(.active) {
 	{
 		var idusuario = window.localStorage.getItem("codusuario");
 		if (idusuario.length<1) {
+			navigator.notification.alert(
+								'Você precisa estar logado para acessar a funcionalidade.',  // message
+								alertDismissed,         // callback
+								'Atenção',            // title
+								'OK'                  // buttonName
+			);
 			$('#myNavbar a[href="#login"]').tab('show');
 		}
 		else
@@ -564,6 +585,33 @@ li.lifooter a:hover:not(.active) {
 			}
 		}
 	}
+
+	function listaSetor(div,nome)
+	{
+		var params = "nomecombo="+nome;
+		var resultado = 0;
+		var xmlhttp = new XMLHttpRequest();
+			
+		xmlhttp.open("GET","http://cerma.jbrj.gov.br/getsetor.php?"+params,true);
+		xmlhttp.onload = function ()
+		{
+			if (xmlhttp.status==200)
+			{
+				var str = xmlhttp.responseText;
+				document.getElementById(div).innerHTML=str;
+			}
+			else if (xmlhttp.status == 404) {
+				alert("Web Service doesn't work");
+			}
+			else
+			{
+				alert("Unknown erro occurred while trying insert data");
+			}
+		};
+		xmlhttp.send();
+		return resultado; 
+	}
+
 
 	function listaPedidosParaAtendimento()
 	{
@@ -655,6 +703,195 @@ li.lifooter a:hover:not(.active) {
 			console.log(JSON.stringify(error));
 		}, options);
 	}
+	
+	function cancelarPedido(id)
+	{
+		if (window.confirm("Deseja cancelar o pedido?")) 
+		{ 
+			var params = "op=CP&id="+id;
+			var resultado = 0;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.open("GET","http://cerma.jbrj.gov.br/exec.pedidoapp.php?"+params,false);
+				
+			xmlhttp.onload = function ()
+			{
+				if (xmlhttp.status==200)
+				{
+					resultado = xmlhttp.responseText;
+	//					document.getElementById('edtdescricao').value = resultado;
+					//carregaatendimento(resultado,0);
+				}
+				else if (xmlhttp.status == 404) 
+				{
+					alert("Web Service doesn't work");
+					
+				}
+				else
+				{
+					alert("Unknown erro occurred while trying insert data");
+				}
+			};
+			meusPedidos();
+			xmlhttp.send();
+		}
+	}
+	
+	function excluirPedido(id)
+	{
+		if (window.confirm("Confirma exclusão?")) { 
+			var params = "op=E&id="+id;
+			var resultado = 0;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.open("GET","http://cerma.jbrj.gov.br/exec.pedidoapp.php?"+params,false);
+			xmlhttp.onload = function (){
+				if (xmlhttp.status==200)
+					{
+						resultado = xmlhttp.responseText;
+					}
+				else if (xmlhttp.status == 404) {
+					alert("Web Service doesn't work");
+					
+				}
+				else
+					{
+						alert("Unknown erro occurred while trying insert data");
+					}
+			};
+			xmlhttp.send();
+			meusPedidos();
+			return resultado;  
+		}
+	}
+	
+	function alterarAtendimento(idpedido,material,atendimento,idsituacao)
+	{
+		var idusuario = window.localStorage.getItem("codusuario");
+		if (idusuario.length>0) 
+		{
+			if ((atendimento=='') || (idsituacao==''))
+			{
+				navigator.notification.alert(
+								'Informe o atendimento e a situação.',  // message
+								alertDismissed,         // callback
+								'Atenção',            // title
+								'OK'                  // buttonName
+				);
+			}	
+			else
+			{
+				var params = "op=AA&idusuario="+idusuario+"&idpedido="+idpedido+"&material="+material+"&atendimento="+atendimento+"&idsituacao="+idsituacao;
+				alert(params);
+				var resultado = 0;
+				var xmlhttp = new XMLHttpRequest();
+					
+				xmlhttp.open("GET","http://cerma.jbrj.gov.br/exec.pedidoapp.php?"+params,false);
+			
+				xmlhttp.onload = function ()
+				{
+				//alert(xmlhttp.status);
+					if (xmlhttp.status==200)
+					{
+					//alert(xmlhttp.responseText);
+						resultado = xmlhttp.responseText;
+					}
+					else 
+					if (xmlhttp.status == 404) 
+					{
+						alert("Web Service doesn't work");
+					}
+					else
+					{
+						alert("Unknown erro occurred while trying insert data");
+					}
+				};
+				xmlhttp.send();
+			}
+		}
+	}
+
+	
+	function salvarPedido()
+	{
+		if 
+		(
+			(document.getElementById('edtsolicitante').value=='') ||
+			(document.getElementById('edtdescricao').value=='') ||
+			(document.getElementById('edtsetor').value=='')
+			
+		)			
+		{
+			navigator.notification.alert(
+								'Verifique o preenchimento dos campos Solicitante, local e descrição.',  // message
+								alertDismissed,         // callback
+								'Atenção',            // title
+								'OK'                  // buttonName
+			);
+		}
+		else
+		{
+
+			var idtiposervico = document.getElementById('cmboxtiposervico').value;
+			var email = document.getElementById('edtemail').value;
+			var telefone = document.getElementById('edttelefone').value;
+			var setor = document.getElementById('edtsetor').value;
+			var local = document.getElementById('edtlocal').value;
+			var sala = document.getElementById('edtsala').value;
+			var solicitante = document.getElementById('edtsolicitante').value;
+			var local = document.getElementById('edtlocal').value;
+			var descricao = document.getElementById('edtdescricao').value;
+			var idusuario = document.getElementById('idusuario').value;// window.localStorage.getItem("idusuario");
+
+			if (local.length<1)
+			{
+				local = setor;
+			}
+			
+			var params = "op=I&idusuario="+idusuario+"&sala="+sala+"&idtiposervico="+idtiposervico+"&email="+email+"&telefone="+telefone+"&solicitante="+solicitante+"&local="+local+"&descricao="+descricao;
+			var resultado = 0;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.open("GET","http://cerma.jbrj.gov.br/exec.pedidoapp.php?"+params,false);
+			
+			xmlhttp.onload = function ()
+			{
+				if (xmlhttp.status==200)
+				{
+					resultado = xmlhttp.responseText;
+					if (resultado>0)
+					{
+						navigator.notification.alert(
+								'Pedido cadastrado com sucesso. No.'+resultado,  // message
+								alertDismissed,         // callback
+								'Sucesso!',            // title
+								'OK'                  // buttonName
+						);
+					}
+					else
+					{
+						navigator.notification.alert(
+								'Não foi possível cadastrar o pedido.',  // message
+								alertDismissed,         // callback
+								'Erro',            // title
+								'OK'                  // buttonName
+						);
+					}
+					//document.getElementById('edtdescricao').value = resultado;
+					//carregaatendimento(resultado,0);
+				}
+				else if (xmlhttp.status == 404) 
+				{
+					alert("Web Service doesn't work");
+					
+				}
+				else
+				{
+					alert("Unknown erro occurred while trying insert data");
+				}
+			};
+			xmlhttp.send();
+			meusPedidos();
+		}
+	}
+
 	
 	function preencheDadosPedido(id)
 	{
@@ -751,127 +988,19 @@ li.lifooter a:hover:not(.active) {
 
 
 	
-		function alterarAtendimento(idpedido,atendimento,idsituacaopedido)
-		{
-		  var idtipousuario = window.localStorage.getItem("codusuario");
-		  if (idtipousuario<'3')
-		  {
-		
-			  if (atendimento=='')
-			  {
-				navigator.notification.alert(
-									'Informe o atendimento.',  // message
-									alertDismissed,         // callback
-									'Atenção',            // title
-									'OK'                  // buttonName
-				);
-//				alert('Informe o atendimento');
-			  }
-			  else
-			  {
-				var atendidopor = window.localStorage.getItem("uname");
-				var params = "op=ASC&atendimento="+atendimento+"&idsituacaopedido="+idsituacaopedido+"&idpedido="+idpedido+"&atendidopor="+atendidopor;
-				 var resultado = 0;
-					var xmlhttp = new XMLHttpRequest();
-					
-					xmlhttp.open("GET","https://projetofauna.jbrj.gov.br/exec.chamado.php?"+params,false);
-			
-					xmlhttp.onload = function (){
-						//alert(xmlhttp.status);
-						if (xmlhttp.status==200)
-							{
-								resultado = xmlhttp.responseText;
-								//alert(params);
-								//alert(resultado);
-								carregaatendimento(0,0);
-							}
-						else if (xmlhttp.status == 404) {
-							alert("Web Service doesn't work");
-							
-						}
-						else
-							{
-								alert("Unknown erro occurred while trying insert data");
-							}
-					};
-				xmlhttp.send();
-				}
-			}
-		}
-		
-		
 
-		
-
-		
-		
-		function carregaatendimento(id,filtro) 
-		{
-		var idtipousuario = window.localStorage.getItem("idtipousuario");
-		  if ((idtipousuario=='3') && (id==0))
-		  {
-			  navigator.notification.alert(
-									'Sem acesso a esta funcionalidade.',  // message
-									alertDismissed,         // callback
-									'Atenção',            // title
-									'OK'                  // buttonName
-				);
-		     // alert('Sem acesso a esta funcionalidade');
-		  
-		  }
-		  else
-		  {
-		// se for passado o id de numero de chamado
-		// redireciona para a página de detalhamento do chamado
-		// caso contrário lista todos os chamados
-		    var idusuario = window.localStorage.getItem("codusuario");
-			if (idusuario == null) 
-			{
-				$('#myNavbar a[href="#login"]').tab('show');
-			}
-			else
-			{
-		
-			   if (id==0)
-			   {
-				$('#myNavbar a[href="#consatendimentofiltro"]').tab('show');
-				//alert(filtro);
-				getChamados(0,filtro);
-			   }
-			   else
-			   {
-				 //alert(id);
-				 $('#myNavbar a[href="#conschamado"]').tab('show');
-				 document.getElementById('edtID').value=id;  
-				 preencheDadosChamado(id);
-				 //pegaImagens(id);
-			   }
-		   }
-		  }
-		   
-		   
-		}
-		
-
-		
 		
 		function exitFromApp(){
 		   window.localStorage.clear();
 		   navigator.app.exitApp();
 		}
 		
-
-		
-
-
 		function leftPad(value, totalWidth, paddingChar) {
 			var length = totalWidth - value.toString().length + 1;
 			return Array(length).join(paddingChar || '0') + value;
 		};
-		
-
 		 
-		function alterarChamado()
+		function alterarPedido(id)
 		{
 			if ((document.getElementById('edtsolicitante2').value=='') ||
 			(document.getElementById('edtlocal2').value=='') ||
@@ -906,7 +1035,7 @@ li.lifooter a:hover:not(.active) {
                 var resultado = 0;
                 var xmlhttp = new XMLHttpRequest();
         		
-                xmlhttp.open("GET","https://projetofauna.jbrj.gov.br/exec.chamado.php?"+params,true);
+                xmlhttp.open("GET","https://cerma.jbrj.gov.br/exec.pedido.php?"+params,true);
 		
                 xmlhttp.onload = function (){
 					//alert(xmlhttp.status);
@@ -952,118 +1081,9 @@ li.lifooter a:hover:not(.active) {
  
 
 		 
-		function salvarChamado()
-		{
-			if ((document.getElementById('edtsolicitante').value=='') ||
-			(document.getElementById('edtlocal').value=='') )
-			{
-				navigator.notification.alert(
-									'Verifique o preenchimento dos campos Solicitante, local e descrição.',  // message
-									alertDismissed,         // callback
-									'Atenção',            // title
-									'OK'                  // buttonName
-								);
-
-				//alert('Verifique o preenchimento dos campos Solicitante, local e descrição.');
-				/*
-				navigator.notification.alert(
-				'Verifique o preenchimento dos campos Solicitante, local e descrição.',  // message
-				alertDismissed,         // callback
-				'Atenção',            // title
-				'OK'                  // buttonName
-				);
-				*/
-			}
-			else
-			{
-				var solicitante = document.getElementById('edtsolicitante').value;
-				var local = document.getElementById('edtlocal').value;
-				var animal = document.getElementById('edtanimal').value;
-				var descricao = document.getElementById('edtdescricao').value;
-				var idsituacaoanimal = document.getElementById('cmboxsituacaoanimal').value;
-				var codusuario = window.localStorage.getItem("idusuario");
-
-				var params = "op=I&codusuario="+codusuario+"&idsituacaoanimal="+idsituacaoanimal+"&solicitante="+solicitante+"&local="+local+"&animal="+animal+"&descricao="+descricao;
-                var resultado = 0;
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("GET","https://projetofauna.jbrj.gov.br/exec.chamado.php?"+params,false);
 		
-                xmlhttp.onload = function (){
-                    if (xmlhttp.status==200)
-                        {
-        					resultado = xmlhttp.responseText;
-							carregaatendimento(resultado,0);
-                        }
-                    else if (xmlhttp.status == 404) {
-                        alert("Web Service doesn't work");
-                        
-                    }
-                    else
-                        {
-                            alert("Unknown erro occurred while trying insert data");
-                        }
-                };
-                xmlhttp.send();
-				
-        }
-     }
 
-		function preencheDadosChamado(id)
-		{
-			var params = "id="+id;
-            var resultado = 0;
-            var xmlhttp = new XMLHttpRequest();
-				
-            xmlhttp.open("GET","https://projetofauna.jbrj.gov.br/getchamadojson.php?"+params,true);
-            xmlhttp.onload = function ()
-			{
-                if (xmlhttp.status==200)
-                {
-					var myObj = JSON.parse(this.responseText);
-					document.getElementById("edtsolicitante2").value= myObj.solicitante;
-					document.getElementById("edtlocal2").value = myObj.local;
-					document.getElementById("edtdescricao2").value = myObj.descricao;
-					document.getElementById("edtanimal2").value = myObj.animal;
-					document.getElementById('cmboxsituacaoanimal2').value=myObj.idsituacaoanimal;
-					document.getElementById("edtlocal2").value= myObj.local;
-					document.getElementById('idsituacaochamado').value=myObj.idsituacaochamado;
-							
-							//document.getElementById("edtdata").value= myObj.data;
-							
-					var d = new Date(myObj.data);
-					var datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " +
-					d.getHours() + ":" + d.getMinutes();
-							
-					document.getElementById("edtdata").value= datestring;
-							
-					document.getElementById("edtatendimento2").value= myObj.atendimento;
-							
-							
-					if (myObj.idsituacaochamado=='3')
-					{
-						// retirei a linha a pedido da GABI para na fase de teste
-						// eles poderem excluir o chamado após estar fechado
-						
-						//$(".botao").attr("disabled","");
-					}
-					else
-					{
-						$(".botao").removeAttr("disabled");
-					}
-                }
-                else if (xmlhttp.status == 404) {
-                    alert("Web Service doesn't work");
-                }
-                else
-                {
-                   alert("Unknown erro occurred while trying insert data");
-                }
-            };
-            xmlhttp.send();
-            return resultado; 
-								
-		}
-		
+
 
 	 
 		function getChamados(id,filtro)
@@ -1153,37 +1173,10 @@ li.lifooter a:hover:not(.active) {
                 xmlhttp.send();
 				return resultado;   
 	   }
+	
+	
 		
-		function excluirChamado(idchamado)
-		{
-			//alert(idchamado);
-			var params = "op=E&id="+idchamado;
-                var resultado = 0;
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("GET","https://projetofauna.jbrj.gov.br/exec.chamado.php?"+params,false);
 		
-                xmlhttp.onload = function (){
-				//alert(xmlhttp.status);
-                    if (xmlhttp.status==200)
-                        {
-        					resultado = xmlhttp.responseText;
-							//alert(resultado);
-							carregaatendimento(0,0);
-							//carregaatendimento(resultado,0);
-                        }
-                    else if (xmlhttp.status == 404) {
-                        alert("Web Service doesn't work");
-                        
-                    }
-                    else
-                        {
-                            alert("Unknown erro occurred while trying insert data");
-                        }
-                };
-				xmlhttp.send();
-				return resultado;  
-		
-		}
 		
 		function alertDismissed() {
 
@@ -1195,6 +1188,7 @@ li.lifooter a:hover:not(.active) {
 
 		
 		$( document ).ready(function() {
+			listaSetor('cadastropedido_divsetor','edtsetor');
 		});
 
 

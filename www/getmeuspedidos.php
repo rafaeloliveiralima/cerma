@@ -8,12 +8,20 @@ $operacao = $_REQUEST['op'];
 $id = $_REQUEST['idusuario'];
 $filtro = $_REQUEST['filtro'];
 
-$sql = 'select p.descricao as descricaopedido, ts.descricao as tiposervico,* from cerma.pedidos p, tiposervico ts 
-where
-cast(p.fk_tiposervico as int) = ts.idtiposervico and
-p.codpessoa = 19577 ';
+$operacao = preg_replace('/[^[:alpha:]_]/', '',$operacao);
+$filtro = preg_replace('/[^[:alpha:]_]/', '',$filtro);
+settype($id, 'integer');
 
-$sql.= ' limit 50 ';
+
+$sql = 'select p.descricao as descricaopedido, ts.descricao as tiposervico, t.nome as nometecnico,* from cerma.pedidos p
+left join tecnico t on cast(fk_tecnico as int) = t.idtecnico
+, tiposervico ts, situacaopedido sp
+where
+p.idsituacaopedido = sp.idsituacaopedido and
+cast(p.fk_tiposervico as int) = ts.idtiposervico and
+p.codpessoa = '.$id;
+$sql.=' order by p.idpedido desc';
+$sql.= ' limit 50  ';
 
 $res = pg_exec($conn,$sql);
 $dir = "./upload"; 
@@ -37,7 +45,7 @@ $dh = opendir($dir);
 							if (substr($filename,-4) == ".jpg") { 
 							// mostra o nome do arquivo e um link para ele - pode ser mudado para mostrar diretamente a imagem :)
 								if (substr($filename,0,4) == $id) { 
-									$imagem = '<img src="https://croma.jbrj.gov.br/CERMA2.0/upload/'.$filename.'" width="60px" class="img-thumbnail">'; 
+									$imagem = '<img src="https://cerma.jbrj.gov.br/upload/'.$filename.'" width="60px" class="img-thumbnail">'; 
 								}
 							}
 						}
@@ -45,27 +53,43 @@ $dh = opendir($dir);
 					  
 					  
 					  $cor = 'default';
-					  if ($row['idsituacaopedido']=='3'){ $cor = 'success'; }
-					  if ($row['idsituacaopedido']=='2'){ $cor = 'warning'; }
-					  if ($row['idsituacaopedido']=='1'){ $cor = 'danger'; }
+					  if ($row['idsituacaopedido']=='1'){ $cor = 'success'; $sb = '';}
+					  if ($row['idsituacaopedido']=='2'){ $cor = 'warning'; $sb = ''; }
+					  if ($row['idsituacaopedido']=='3'){ $cor = 'danger'; $sb = ''; }
+					  if ($row['idsituacaopedido']=='4'){ $cor = 'default'; $sb = 'disabled'; }
+					  if ($row['idsituacaopedido']=='5'){ $cor = 'default'; $sb = 'disabled';}
+					  if ($row['idsituacaopedido']=='6'){ $cor = 'default'; $sb = 'disabled'; }
 					  
 					  ?>
 					<div class="panel panel-<?php echo $cor;?>">
-						  <div class="panel-heading"><a onclick='carregaatendimento(<?php echo $row['idpedido'];?>)'><?php echo "Nº ".$row['idpedido'].'/'.$row['ano'].' - '.utf8_encode($row['tiposervico']).' - '.date('d/m/Y',strtotime($row['datainicio']));?></a></div>
+						  <div class="panel-heading"><?php echo "Nº ".$row['idpedido'].'/'.$row['ano'].' - '.utf8_encode($row['tiposervico']).' - '.date('d/m/Y',strtotime($row['datainicio']));?></div>
 						  <div class="panel-body">
 						  <div class="card">
 							<div class="card-body">
 								<h4 class="card-title"></h4>
 								<p class="card-text">
 								<?php echo $imagem;?>
-								<p><b>Local: </b><?php echo utf8_encode($row['local']);?></p>
-								<p><b>Sala: </b><?php echo utf8_encode($row['sala']);?></p>
-								<p><b>Descrição: </b><?php echo utf8_encode($row['descricaopedido']);?></p>
-								<a onclick="confirmarAtendimento(<?php echo $row['idpedido'];?>)" class="btn btn-warning btn-md">
+								<p><b>Local/Sala: </b><?php echo utf8_encode($row['local']);?>/<?php echo utf8_encode($row['sala']);?><br>
+								<b>Descrição: </b><?php echo $row['descricaopedido'];?><br>
+								<?php if (!empty($row['solucao']))
+								{
+								?>
+								<b>Atendimento: </b><?php echo $row['solucao'];?><br>
+								<b>Tecnico: </b><?php echo $row['nometecnico'];?><br>
+								<b>Data: </b><?php echo date('d/m/Y',strtotime($row['solucao']));?></p>
+								<?php	
+								}
+								?>
+								<div class="alert alert-success"><strong>Situação: </strong><?php echo $row['situacaopedido'];?></div>
+								
+								<a onclick="confirmarAtendimento(<?php echo $row['idpedido'];?>)" class="btn btn-info btn-md <?php echo $sb;?>">
 									<span class="glyphicon glyphicon-pencil"></span> 
 								</a>
-								<a onclick="cancelarPedido(<?php echo $row['idpedido'];?>)" class="btn btn-danger btn-md">
+								<a onclick="cancelarPedido(<?php echo $row['idpedido'];?>)" class="btn btn-warning btn-md <?php echo $sb;?>">
 									<span class="glyphicon glyphicon-remove"></span> 
+								</a>
+								<a onclick="excluirPedido(<?php echo $row['idpedido'];?>)" class="btn btn-danger btn-md <?php echo $sb;?>">
+									<span class="glyphicon glyphicon-trash"></span> 
 								</a>
 
 							</div>

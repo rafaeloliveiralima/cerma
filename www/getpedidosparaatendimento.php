@@ -8,10 +8,14 @@ $operacao = $_REQUEST['op'];
 $id = $_REQUEST['idusuario'];
 $filtro = $_REQUEST['filtro'];
 
-$sql = 'select p.descricao as descricaopedido, ts.descricao as tiposervico,* from cerma.pedidos p, tiposervico ts 
+$operacao = preg_replace('/[^[:alpha:]_]/', '',$operacao);
+$filtro = preg_replace('/[^[:alpha:]_]/', '',$filtro);
+settype($id, 'integer');
+
+$sql = 'select p.descricao as descricaopedido, ts.descricao as tiposervico,* from cerma.pedidos p, tiposervico ts, situacaopedido sp 
 where
-cast(p.fk_tiposervico as int) = ts.idtiposervico and
-p.codpessoa = 19577 ';
+p.idsituacaopedido = sp.idsituacaopedido and
+cast(p.fk_tiposervico as int) = ts.idtiposervico and p.idsituacaopedido in (1,2,3) ';
 
 $sql.= ' limit 50 ';
 
@@ -37,7 +41,7 @@ $dh = opendir($dir);
 							if (substr($filename,-4) == ".jpg") { 
 							// mostra o nome do arquivo e um link para ele - pode ser mudado para mostrar diretamente a imagem :)
 								if (substr($filename,0,4) == $id) { 
-									$imagem = '<img src="https://croma.jbrj.gov.br/CERMA2.0/upload/'.$filename.'" width="60px" class="img-thumbnail">'; 
+									$imagem = '<img src="http://cerma.jbrj.gov.br/upload/'.$filename.'" width="100px" class="img-thumbnail">'; 
 								}
 							}
 						}
@@ -48,32 +52,40 @@ $dh = opendir($dir);
 					  if ($row['idprioridade']=='3'){ $cor = 'success'; }
 					  if ($row['idprioridade']=='2'){ $cor = 'warning'; }
 					  if ($row['idprioridade']=='1'){ $cor = 'danger'; }
+
+					  $cors = 'default';
+					  if ($row['idsituacaopedido']=='1'){ $cors = 'success'; $sbc = '';}
+					  if ($row['idsituacaopedido']=='2'){ $cors = 'warning'; $sbc = ''; }
+					  if ($row['idsituacaopedido']=='3'){ $cors = 'danger'; $sbc = ''; }
+					  if ($row['idsituacaopedido']=='4'){ $cors = 'default'; $sbc = ''; }
+					  if ($row['idsituacaopedido']=='5'){ $cors = 'default'; $sbc = '';}
+					  if ($row['idsituacaopedido']=='6'){ $cors = 'default'; $sbc = ''; }
+					  
 					  
 					  ?>
 					<div class="panel panel-<?php echo $cor;?>">
-						  <div class="panel-heading"><a onclick='carregaatendimento(<?php echo $row['idchamado'];?>)'><?php echo "Nº ".$row['idpedido'].'/'.$row['ano'].' - '.utf8_encode($row['tiposervico']).' - '.date('d/m/Y',strtotime($row['datainicio']));?></a></div>
+						  <div class="panel-heading"><?php echo "Nº ".$row['idpedido'].'/'.$row['ano'].' - '.utf8_encode($row['tiposervico']).' - '.date('d/m/Y',strtotime($row['datainicio']));?></div>
 						  <div class="panel-body">
 						  <div class="card">
 							<div class="card-body">
 								<h4 class="card-title"></h4>
 								<p class="card-text">
 								<?php echo $imagem;?>
-								<p><b>Solicitante: </b><?php echo utf8_encode($row['nome']);?></p>
-								<p><b>Telefone: </b><?php echo utf8_encode($row['telefone']);?></p>
-								<p><b>Local: </b><?php echo utf8_encode($row['local']);?></p>
-								<p><b>Sala: </b><?php echo utf8_encode($row['sala']);?></p>
-								<p><b>Descrição: </b><?php echo utf8_encode($row['descricaopedido']);?></p>
-
-								<a onclick="abreCamera('CAMERA','CHAMADO','')" class="btn btn-success btn-md">
+								<p><b>Solicitante: </b><?php echo utf8_encode($row['nome']);?><br>
+								<b>Telefone: </b><?php echo utf8_encode($row['telefone']);?><br>
+								<b>Local: </b><?php echo utf8_encode($row['local']);?>/Sala: </b><?php echo utf8_encode($row['sala']);?><br>
+								<b>Descrição: </b><?php echo $row['descricaopedido'];?></p>
+								<div class="alert alert-success"><strong>Situação: </strong><?php echo $row['situacaopedido'];?></div>
+								<a onclick="abreCamera('CAMERA','PEDIDO','<?php echo $row['idpedido'];?>')" class="btn btn-success btn-md">
 									<span class="glyphicon glyphicon-camera"></span> 
 								</a>
-								<a onclick="abreCamera('ARQUIVO','CHAMADO','')" class="btn btn-info btn-md">
+								<a onclick="abreCamera('ARQUIVO','PEDIDO','<?php echo $row['idpedido'];?>')" class="btn btn-info btn-md">
 									<span class="glyphicon glyphicon-file"></span> 
 								</a>
 								<a onclick="abreAtedimento(<?php echo $row['idpedido'];?>)" class="btn btn-danger btn-md">
 									<span class="glyphicon glyphicon-edit"></span> 
 								</a>
-								<a onclick="confirmarAtendimento(<?php echo $row['idpedido'];?>)" class="btn btn-warning btn-md">
+								<a onclick="confirmarAtendimento(<?php echo $row['idpedido'];?>)" class="btn btn-warning btn-md <?php echo $sbc;?>">
 									<span class="glyphicon glyphicon-pencil"></span> 
 								</a>
 							</div>

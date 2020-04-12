@@ -4,8 +4,10 @@ require_once('classes/conexao.class.php');
 $conexao = new Conexao;
 $conn = $conexao->Conectar();
 
-$operacao = $_REQUEST['op'];
 $id = $_REQUEST['id'];
+$operacao = $_REQUEST['op'];
+$operacao = preg_replace('/[^[:alpha:]_]/', '',$operacao);
+settype($id, 'integer');
 
 $sql = 'select * from cerma.pedidos where idpedido = '.$id;
 $res = pg_exec($conn,$sql);
