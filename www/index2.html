@@ -766,7 +766,7 @@ li.lifooter a:hover:not(.active) {
 			if (funcao=='PEDIDO')
 			{
 				navigator.camera.getPicture(uploadPhoto, function(message) {
-					alert('get picture failed');
+					alert('get picture failed'+message);
 				}, {
 				quality: 25,
 				destinationType: navigator.camera.DestinationType.FILE_URI,
@@ -776,7 +776,7 @@ li.lifooter a:hover:not(.active) {
 			else
 			{
 				navigator.camera.getPicture(uploadPhoto, function(message) {
-					alert('get picture failed');
+					alert('get picture failed'+message);
 				}, {
 				quality: 25,
 				destinationType: navigator.camera.DestinationType.FILE_URI,
