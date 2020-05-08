@@ -811,7 +811,8 @@ li.lifooter a:hover:not(.active) {
 
 		var ft = new FileTransfer();
 		ft.onprogress = function(progressEvent) {
-			alert(progressEvent.loaded);
+			//alert(progressEvent.loaded);
+			document.getElementById('btn_camera_'+document.getElementById('idpedidoparaatendimento').value+'').value = progressEvent.loaded;
 			/*if (progressEvent.lengthComputable) {
 				loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
 			} else {
