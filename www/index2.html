@@ -812,7 +812,7 @@ li.lifooter a:hover:not(.active) {
 		var ft = new FileTransfer();
 		ft.onprogress = function(progressEvent) {
 			//alert(progressEvent.loaded);
-			document.getElementById('btn_camera_'+document.getElementById('idpedidoparaatendimento').value+'').value = progressEvent.loaded;
+			//document.getElementById('btn_camera_'+document.getElementById('idpedidoparaatendimento').value+'').value = progressEvent.loaded;
 			/*if (progressEvent.lengthComputable) {
 				loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
 			} else {
@@ -822,8 +822,20 @@ li.lifooter a:hover:not(.active) {
 		};
 		
 		ft.upload(imageURI, "http://cerma.jbrj.gov.br/upload.php", function(result){
+				navigator.notification.alert(
+									'Imagem carregada com sucesso.',  // message
+									alertDismissed,         // callback
+									'Atenção',            // title
+									'OK'                  // buttonName
+				);
 			console.log(JSON.stringify(result));
 		}, function(error){
+				navigator.notification.alert(
+									'Não foi possível carregar a imagem.',  // message
+									alertDismissed,         // callback
+									'Atenção',            // title
+									'OK'                  // buttonName
+				);
 			console.log(JSON.stringify(error));
 		}, options);
 	}
