@@ -250,7 +250,7 @@ li.lifooter a:hover:not(.active) {
 </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
       </div>
     </div>
 
@@ -766,7 +766,7 @@ li.lifooter a:hover:not(.active) {
 			if (funcao=='PEDIDO')
 			{
 				navigator.camera.getPicture(uploadPhoto, function(message) {
-					alert('get picture failed'+message);
+					alert('get picture failed');
 				}, {
 				quality: 25,
 				destinationType: navigator.camera.DestinationType.FILE_URI,
@@ -776,7 +776,7 @@ li.lifooter a:hover:not(.active) {
 			else
 			{
 				navigator.camera.getPicture(uploadPhoto, function(message) {
-					alert('get picture failed'+message);
+					alert('get picture failed');
 				}, {
 				quality: 25,
 				destinationType: navigator.camera.DestinationType.FILE_URI,
@@ -810,6 +810,16 @@ li.lifooter a:hover:not(.active) {
 		options.chunkedMode = false;
 
 		var ft = new FileTransfer();
+		ft.onprogress = function(progressEvent) {
+			alert(progressEvent.loaded);
+			/*if (progressEvent.lengthComputable) {
+				loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
+			} else {
+				loadingStatus.increment();
+			}
+			*/
+		};
+		
 		ft.upload(imageURI, "http://cerma.jbrj.gov.br/upload.php", function(result){
 			console.log(JSON.stringify(result));
 		}, function(error){
@@ -1074,7 +1084,8 @@ li.lifooter a:hover:not(.active) {
 		
 	function abreModalImagem(myObj)
 	{	
-		for (c=0;c<=Object.keys(myObj).length;c++)
+		var conta = Object.keys(myObj.imagens).length;
+		for (c=0;c<=conta;c++)
 		{
 			if (c==0)
 			{
