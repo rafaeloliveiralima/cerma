@@ -303,6 +303,8 @@ li.lifooter a:hover:not(.active) {
 	<input type='hidden' name='idusuario' id='idusuario' value=''>
 	<input type='hidden' name='idpedidoparaatendimento' id='idpedidoparaatendimento' value=''>
 	<input type='hidden' name='nome' id='nome' value=''>
+	<input type='hidden' name='papel' id='papel' value=''>
+	<input type='hidden' name='idtecnico' id='idtecnico' value=''>
 
 	<div class="tab-content" id="mytab">
 		<div id="consmeuspedidos" class="tab-pane fade">
@@ -333,13 +335,9 @@ li.lifooter a:hover:not(.active) {
 				</div>
 				
 				<div class="form-group">
-					<label for="email">Setor</label>
-					<div id='cadastropedido_divsetor'></div>
-					<!--<input type="text" class="form-control" id="edtsetor" name="edtsetor" value="">-->
-				</div>
-				<div class="form-group">
 					<label for="email">Local</label>
-					<input type="text" class="form-control" id="edtlocal" name="edtlocal" value="">
+					<div id='cadastropedido_divlocal'></div>
+					<!--<input type="text" class="form-control" id="edtsetor" name="edtsetor" value="">-->
 				</div>
 				<div class="form-group">
 					<label for="email">Sala</label>
@@ -419,6 +417,7 @@ li.lifooter a:hover:not(.active) {
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
+	
 	function login()
 	{
 		var login = document.getElementById('edtlogin').value;
@@ -450,21 +449,28 @@ li.lifooter a:hover:not(.active) {
 					codusuario = res[0];
 					ggcodusuario = res[0];
 					username = res[1];
+					papel = res[2];
+					idtecnico = res[3];
 					idtiposuaurio = 1;
-
+					idtecnico = 102;
 					window.localStorage.setItem("uname", username);
 					window.localStorage.setItem("codusuario",codusuario);
 					window.localStorage.setItem("idtiposuaurio",idtiposuaurio);
+					window.localStorage.setItem("papel",papel);
+					window.localStorage.setItem("idtecnico",idtecnico);
 
 					document.getElementById('div_dadoslogin').innerHTML='<p class="navbar-text">'+username+'</p>';
 
 					document.getElementById('idusuario').value=window.localStorage.getItem("codusuario");
 					document.getElementById('nome').value=window.localStorage.getItem("uname");
+					document.getElementById('papel').value=window.localStorage.getItem("papel");
+					document.getElementById('idtecnico').value=window.localStorage.getItem("idtecnico");
 					$('#myNavbar a[href="#home"]').tab('show');								
 					
 				}
-				if (idtiposuaurio<3)
+				if (idtecnico>0)
 				{
+					//alert('temos um tecnico');
 					//mostraChamadosParaAtender();
 				}
 			}
@@ -479,23 +485,92 @@ li.lifooter a:hover:not(.active) {
 		};
 		xmlhttp.send();
 		return resultado;
+		
     }
 	 
 	
 	function confirmarAtendimento(idatendimento)
 	{
+		document.getElementById('idpedidoparaatendimento').value=idatendimento;
 		$("#myModalConfirmacaoAtendimento").modal();
 	}
 	
 	function salvarConfirmarAtendimento()
 	{
+		var idusuario = window.localStorage.getItem("codusuario");
+		var idtecnico = window.localStorage.getItem("idtecnico");
+		var atendimento_observacao = document.getElementById('edtconfirmacaoatendimento_observacao').value;
+		var idpedido = document.getElementById('idpedidoparaatendimento').value;
+		
+		if (idusuario.length>0) 
+		{
+			if (atendimento_observacao=='')
+			{
+				navigator.notification.alert(
+								'Preencha a observação do atendimento.',  // message
+								alertDismissed,         // callback
+								'Atenção',            // title
+								'OK'                  // buttonName
+				);
+			}	
+			else
+			{
+				var login = document.getElementById('edtconfirmacaoatendimento_login').value;
+				var senha = document.getElementById('edtconfirmacaoatendimento_senha').value;
+				var params = "idpedido="+idpedido+"&edtlogin="+login+"&edtsenha="+senha+"&obs="+atendimento_observacao;
+				var resultado = 0;
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.open("GET","http://cerma.jbrj.gov.br/testaloginappconfirmacao.php?"+params,false);
+				xmlhttp.onload = function ()
+				{
+					if (xmlhttp.status==200)
+					{
+						var str = xmlhttp.responseText;
+						
+						alert(str);
+						
+						if (str.substring(0, 4)=='ERRO')
+						{
+							navigator.notification.alert(
+								'Não foi possível efetuar a confirmação. Usuário ou senha inválidos.',  // message
+								alertDismissed,         // callback
+								'Atenção',            // title
+								'OK'                  // buttonName
+							);
+						}
+						else
+						{
+							navigator.notification.alert(
+								'Confirmado com sucesso!',  // message
+								alertDismissed,         // callback
+								'Atenção',            // title
+								'OK'                  // buttonName
+							);
 
+							$('#myNavbar a[href="#home"]').tab('show');								
+							
+						}
+						
+					}
+					else if (xmlhttp.status == 404) 
+					{
+						alert("Web Service doesn't work");
+					}
+					else
+					{
+						alert("Unknown erro occurred while trying insert data");
+					}
+				};
+				xmlhttp.send();
+				return resultado;
+			}
+		}
 	}
 
 	function abreAtedimento(idatendimento)
 	{
-	   var idtipousuario = window.localStorage.getItem("idtipousuario");
-	   if (idtipousuario<'3')
+	   var idusuario = window.localStorage.getItem("idusuario");
+	   if (idusuario<'3')
 	   {
 			document.getElementById('idpedidoparaatendimento').value=idatendimento;
 			$("#myModal").modal();
@@ -530,8 +605,7 @@ li.lifooter a:hover:not(.active) {
 			document.getElementById('edtsolicitante').value=window.localStorage.getItem('uname');
 			document.getElementById('edttelefone').value='';
 			document.getElementById('edtemail').value='';
-			document.getElementById('edtsetor').value='';
-			document.getElementById('edtlocal').value='';
+			document.getElementById('cmboxlocal').value='';
 			document.getElementById('cmboxtiposervico').value='';
 			document.getElementById('edtdescricao').value='';
 			$(".botao").removeAttr("disabled");
@@ -574,18 +648,57 @@ li.lifooter a:hover:not(.active) {
 		}
 		else
 		{	
-			var idusuario = document.getElementById('idusuario').value;
-			if (document.getElementById('idusuario').value!='') {
-				$('#myNavbar a[href="#conspedidosparaatendimento"]').tab('show');
-				listaPedidosParaAtendimento();
+			if (document.getElementById('idtecnico').value>0)
+			{
+				var idusuario = document.getElementById('idusuario').value;
+				if (document.getElementById('idusuario').value!='') {
+					$('#myNavbar a[href="#conspedidosparaatendimento"]').tab('show');
+					listaPedidosParaAtendimento();
+				}
+				else
+				{
+					alert(document.getElementById('idusuario').value);
+				}
 			}
 			else
 			{
-				alert(document.getElementById('idusuario').value);
+				navigator.notification.alert(
+									'Apenas disponível para técnicos.',  // message
+									alertDismissed,         // callback
+									'Atenção',            // title
+									'OK'                  // buttonName
+				);
 			}
 		}
 	}
 
+	function listaLocal(div,nome)
+	{
+		var params = "nomecombo="+nome;
+		var resultado = 0;
+		var xmlhttp = new XMLHttpRequest();
+			
+		xmlhttp.open("GET","http://cerma.jbrj.gov.br/getlocal.php?"+params,true);
+		xmlhttp.onload = function ()
+		{
+			if (xmlhttp.status==200)
+			{
+				var str = xmlhttp.responseText;
+				document.getElementById(div).innerHTML=str;
+			}
+			else if (xmlhttp.status == 404) {
+				alert("Web Service doesn't work");
+			}
+			else
+			{
+				alert("Unknown erro occurred while trying insert data");
+			}
+		};
+		xmlhttp.send();
+		return resultado; 
+	}
+	
+	
 	function listaSetor(div,nome)
 	{
 		var params = "nomecombo="+nome;
@@ -615,7 +728,7 @@ li.lifooter a:hover:not(.active) {
 
 	function listaPedidosParaAtendimento()
 	{
-		var params = "";
+		var params = "idtecnico="+document.getElementById('idtecnico').value;
 		var resultado = 0;
 		var xmlhttp = new XMLHttpRequest();
 			
@@ -687,7 +800,7 @@ li.lifooter a:hover:not(.active) {
 	function uploadPhoto(imageURI) {
 		var options = new FileUploadOptions();
 		options.fileKey = "file";
-		options.fileName = leftPad(document.getElementById('idpedidoparaatendimento').value,4)+'_'+imageURI.substr(imageURI.lastIndexOf('/') + 1);
+		options.fileName = leftPad(document.getElementById('idpedidoparaatendimento').value,5)+'_'+imageURI.substr(imageURI.lastIndexOf('/') + 1);
 		options.mimeType = "image/jpeg";
 		console.log(options.fileName);
 		var params = new Object();
@@ -766,6 +879,7 @@ li.lifooter a:hover:not(.active) {
 	function alterarAtendimento(idpedido,material,atendimento,idsituacao)
 	{
 		var idusuario = window.localStorage.getItem("codusuario");
+		var idtecnico = window.localStorage.getItem("idtecnico");
 		if (idusuario.length>0) 
 		{
 			if ((atendimento=='') || (idsituacao==''))
@@ -779,7 +893,7 @@ li.lifooter a:hover:not(.active) {
 			}	
 			else
 			{
-				var params = "op=AA&idusuario="+idusuario+"&idpedido="+idpedido+"&material="+material+"&atendimento="+atendimento+"&idsituacao="+idsituacao;
+				var params = "op=AA&idtecnico="+idtecnico+"&idusuario="+idusuario+"&idpedido="+idpedido+"&material="+material+"&atendimento="+atendimento+"&idsituacao="+idsituacao;
 				alert(params);
 				var resultado = 0;
 				var xmlhttp = new XMLHttpRequest();
@@ -791,7 +905,7 @@ li.lifooter a:hover:not(.active) {
 				//alert(xmlhttp.status);
 					if (xmlhttp.status==200)
 					{
-					//alert(xmlhttp.responseText);
+					alert(xmlhttp.responseText);
 						resultado = xmlhttp.responseText;
 					}
 					else 
@@ -816,7 +930,7 @@ li.lifooter a:hover:not(.active) {
 		(
 			(document.getElementById('edtsolicitante').value=='') ||
 			(document.getElementById('edtdescricao').value=='') ||
-			(document.getElementById('edtsetor').value=='')
+			(document.getElementById('cmboxlocal').value=='')
 			
 		)			
 		{
@@ -833,24 +947,16 @@ li.lifooter a:hover:not(.active) {
 			var idtiposervico = document.getElementById('cmboxtiposervico').value;
 			var email = document.getElementById('edtemail').value;
 			var telefone = document.getElementById('edttelefone').value;
-			var setor = document.getElementById('edtsetor').value;
-			var local = document.getElementById('edtlocal').value;
 			var sala = document.getElementById('edtsala').value;
 			var solicitante = document.getElementById('edtsolicitante').value;
-			var local = document.getElementById('edtlocal').value;
+			var idlocal = document.getElementById('cmboxlocal').value;
 			var descricao = document.getElementById('edtdescricao').value;
 			var idusuario = document.getElementById('idusuario').value;// window.localStorage.getItem("idusuario");
 
-			if (local.length<1)
-			{
-				local = setor;
-			}
-			
-			var params = "op=I&idusuario="+idusuario+"&sala="+sala+"&idtiposervico="+idtiposervico+"&email="+email+"&telefone="+telefone+"&solicitante="+solicitante+"&local="+local+"&descricao="+descricao;
+			var params = "op=I&idusuario="+idusuario+"&idlocal="+idlocal+"&sala="+sala+"&idtiposervico="+idtiposervico+"&email="+email+"&telefone="+telefone+"&descricao="+descricao;
 			var resultado = 0;
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.open("GET","http://cerma.jbrj.gov.br/exec.pedidoapp.php?"+params,false);
-			
 			xmlhttp.onload = function ()
 			{
 				if (xmlhttp.status==200)
@@ -986,21 +1092,22 @@ li.lifooter a:hover:not(.active) {
 		$("#modalFotoAnimal").modal()
 	}
 
-
-	
-
+	function exitFromApp(){
+	   window.localStorage.clear();
+	   navigator.app.exitApp();
+	}
 		
-		function exitFromApp(){
-		   window.localStorage.clear();
-		   navigator.app.exitApp();
-		}
-		
-		function leftPad(value, totalWidth, paddingChar) {
-			var length = totalWidth - value.toString().length + 1;
-			return Array(length).join(paddingChar || '0') + value;
-		};
+
+	function leftPad(value, totalWidth, paddingChar) {
+		var length = totalWidth - value.toString().length + 1;
+		return Array(length).join(paddingChar || '0') + value;
+	};
 		 
-		function alterarPedido(id)
+
+
+
+
+		 function alterarPedido(id)
 		{
 			if ((document.getElementById('edtsolicitante2').value=='') ||
 			(document.getElementById('edtlocal2').value=='') ||
@@ -1178,19 +1285,43 @@ li.lifooter a:hover:not(.active) {
 		
 		
 		
-		function alertDismissed() {
+function alertDismissed() {
 
-		}
-
-		
-
-
+}
 
 		
-		$( document ).ready(function() {
-			listaSetor('cadastropedido_divsetor','edtsetor');
-		});
+function exibeMensagem(codigo)
+{
+	m = '';
+	if (codigo=='01')
+	{
+		m = 'Sem acesso a funcionalidade';
+	}
+	if (codigo=='02')
+	{
+		m = 'Não foi possível acessar sua localização!';
+	}
+	if (codigo=='03')
+	{
+		m = 'Efetue o login.';
+	}	
+	navigator.notification.alert(
+				m,  // message
+				alertDismissed,         // callback
+				'Atenção',            // title
+				'OK'                  // buttonName
+	);
 
+}
+
+$( document ).ready(function() {
+	listaLocal('cadastropedido_divlocal','cmboxlocal');
+	$('[data-toggle="tooltip"]').tooltip();
+	
+});
+
+		
+		
 
     </script>
 </body>
