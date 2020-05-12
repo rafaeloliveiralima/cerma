@@ -207,7 +207,7 @@ li.lifooter a:hover:not(.active) {
 
 
 <!-- Modal content-->
-<div id="modalFotoAnimal" class="modal fade" role="dialog">
+<div id="modalFoto" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -216,9 +216,11 @@ li.lifooter a:hover:not(.active) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Imagem</h4>
       </div>
-      <div class="modal-body"  style="background-color:DarkSeaGreen">
+      <div class="modal-body">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
+  <div id="divimagem">
+  
   <ol class="carousel-indicators" >
     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
     <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -231,12 +233,15 @@ li.lifooter a:hover:not(.active) {
 	  <img id='imgmodal1' src="" class="media-object" style="width:300px">
     </div>
 	<div class="item">
-        <img id='imgmodal2' src="" alt="Chicago" style="width:300%;">
+        <img id='imgmodal2' src="" style="width:300%;">
     </div>
 	<div class="item">
-        <img id='imgmodal3' src="" alt="Chicago" style="width:300%;">
+        <img id='imgmodal3' src="" style="width:300%;">
     </div>
   </div>
+  
+  </div>
+
 
   <!-- Left and right controls -->
   <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -445,6 +450,7 @@ li.lifooter a:hover:not(.active) {
 				}
 				else
 				{
+					//alert(str);
 					var res = str.split("|");
 					codusuario = res[0];
 					ggcodusuario = res[0];
@@ -452,7 +458,7 @@ li.lifooter a:hover:not(.active) {
 					papel = res[2];
 					idtecnico = res[3];
 					idtiposuaurio = 1;
-					idtecnico = 102;
+					//idtecnico = 102;
 					window.localStorage.setItem("uname", username);
 					window.localStorage.setItem("codusuario",codusuario);
 					window.localStorage.setItem("idtiposuaurio",idtiposuaurio);
@@ -471,7 +477,7 @@ li.lifooter a:hover:not(.active) {
 				if (idtecnico>0)
 				{
 					//alert('temos um tecnico');
-					//mostraChamadosParaAtender();
+					carregaParaAtendimento();
 				}
 			}
 			else if (xmlhttp.status == 404) 
@@ -527,7 +533,7 @@ li.lifooter a:hover:not(.active) {
 					{
 						var str = xmlhttp.responseText;
 						
-						alert(str);
+						//alert(str);
 						
 						if (str.substring(0, 4)=='ERRO')
 						{
@@ -731,7 +737,7 @@ li.lifooter a:hover:not(.active) {
 		var params = "idtecnico="+document.getElementById('idtecnico').value;
 		var resultado = 0;
 		var xmlhttp = new XMLHttpRequest();
-			
+		alert(params);
 		xmlhttp.open("GET","http://cerma.jbrj.gov.br/getpedidosparaatendimento.php?"+params,true);
 		xmlhttp.onload = function ()
 		{
@@ -749,6 +755,7 @@ li.lifooter a:hover:not(.active) {
 			}
 		};
 		xmlhttp.send();
+		aleret(resultado);
 		return resultado; 
 	}
 	
@@ -905,7 +912,7 @@ li.lifooter a:hover:not(.active) {
 		var idtecnico = window.localStorage.getItem("idtecnico");
 		if (idusuario.length>0) 
 		{
-			if ((atendimento=='') || (idsituacao==''))
+/*			if ((atendimento=='') || (idsituacao==''))
 			{
 				navigator.notification.alert(
 								'Informe o atendimento e a situação.',  // message
@@ -916,6 +923,7 @@ li.lifooter a:hover:not(.active) {
 			}	
 			else
 			{
+*/
 				var params = "op=AA&idtecnico="+idtecnico+"&idusuario="+idusuario+"&idpedido="+idpedido+"&material="+material+"&atendimento="+atendimento+"&idsituacao="+idsituacao;
 				alert(params);
 				var resultado = 0;
@@ -942,7 +950,7 @@ li.lifooter a:hover:not(.active) {
 					}
 				};
 				xmlhttp.send();
-			}
+/*			} */
 		}
 	}
 
@@ -1095,11 +1103,15 @@ li.lifooter a:hover:not(.active) {
 		$('.navbar-collapse').collapse('hide');
 	});
 		
-	function abreModalImagem(myObj)
+	function abreModalImagem(imagem)
 	{	
+		document.getElementById('divimagem').innerHTML = imagem;
+/*		alert(myObj);
 		var conta = Object.keys(myObj.imagens).length;
-		for (c=0;c<=conta;c++)
+		alert(Object.keys(myObj.imagens).length);
+		for (c=0;c<conta;c++)
 		{
+			alert(myObj.imagens[c].arquivo);
 			if (c==0)
 			{
 				$('#imgmodal1').attr('src',myObj.imagens[c].arquivo);
@@ -1113,7 +1125,8 @@ li.lifooter a:hover:not(.active) {
 				$('#imgmodal3').attr('src',myObj.imagens[c].arquivo);
 			}
 		}
-		$("#modalFotoAnimal").modal()
+		*/
+		$("#modalFoto").modal()
 	}
 
 	function exitFromApp(){
