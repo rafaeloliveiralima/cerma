@@ -477,7 +477,7 @@ li.lifooter a:hover:not(.active) {
 				if (idtecnico>0)
 				{
 					//alert('temos um tecnico');
-					carregaParaAtendimento();
+					//carregaParaAtendimento();
 				}
 			}
 			else if (xmlhttp.status == 404) 
@@ -571,6 +571,7 @@ li.lifooter a:hover:not(.active) {
 				return resultado;
 			}
 		}
+		$('#myNavbar a[href="#home"]').tab('show');	
 	}
 
 	function abreAtedimento(idatendimento)
@@ -663,7 +664,7 @@ li.lifooter a:hover:not(.active) {
 				}
 				else
 				{
-					alert(document.getElementById('idusuario').value);
+					//alert(document.getElementById('idusuario').value);
 				}
 			}
 			else
@@ -737,7 +738,7 @@ li.lifooter a:hover:not(.active) {
 		var params = "idtecnico="+document.getElementById('idtecnico').value;
 		var resultado = 0;
 		var xmlhttp = new XMLHttpRequest();
-		alert(params);
+		//alert(params);
 		xmlhttp.open("GET","http://cerma.jbrj.gov.br/getpedidosparaatendimento.php?"+params,true);
 		xmlhttp.onload = function ()
 		{
@@ -804,6 +805,7 @@ li.lifooter a:hover:not(.active) {
 		}
 		
 	}
+	
 	function uploadPhoto(imageURI) {
 		var options = new FileUploadOptions();
 		options.fileKey = "file";
@@ -952,6 +954,7 @@ li.lifooter a:hover:not(.active) {
 				xmlhttp.send();
 /*			} */
 		}
+		meusPedidos();
 	}
 
 	
@@ -1106,26 +1109,6 @@ li.lifooter a:hover:not(.active) {
 	function abreModalImagem(imagem)
 	{	
 		document.getElementById('divimagem').innerHTML = imagem;
-/*		alert(myObj);
-		var conta = Object.keys(myObj.imagens).length;
-		alert(Object.keys(myObj.imagens).length);
-		for (c=0;c<conta;c++)
-		{
-			alert(myObj.imagens[c].arquivo);
-			if (c==0)
-			{
-				$('#imgmodal1').attr('src',myObj.imagens[c].arquivo);
-			}
-			if (c==1)
-			{
-				$('#imgmodal2').attr('src',myObj.imagens[c].arquivo);
-			}
-			if (c==2)
-			{
-				$('#imgmodal3').attr('src',myObj.imagens[c].arquivo);
-			}
-		}
-		*/
 		$("#modalFoto").modal()
 	}
 
@@ -1225,42 +1208,7 @@ li.lifooter a:hover:not(.active) {
  
 
 		 
-		
 
-
-
-	 
-		function getChamados(id,filtro)
-		{
-         var params = "idusuario="+id+"&filtro="+filtro;
-                var resultado = 0;
-                var xmlhttp = new XMLHttpRequest();
-				
-                xmlhttp.open("GET","https://projetofauna.jbrj.gov.br/getchamados.php?"+params,true);
-                xmlhttp.onload = function (){
-                    if (xmlhttp.status==200)
-                        {
-						    var str = xmlhttp.responseText;
-							if (id==0)
-							{
-								document.getElementById("chamadosfiltro").innerHTML=str;
-							}
-							else
-							{
-								document.getElementById("chamados").innerHTML=str;
-							}
-						}
-                    else if (xmlhttp.status == 404) {
-                        alert("Web Service doesn't work");
-                    }
-                    else
-                        {
-                            alert("Unknown erro occurred while trying insert data");
-                        }
-                };
-                xmlhttp.send();
-                return resultado;       
-       }
 		function getMeusPedidos()
 		{
 			var codusuario = window.localStorage.getItem("codusuario");
